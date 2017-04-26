@@ -144,11 +144,14 @@ type QueueClient<'Msg>(connectionString: ConnectionString, queueName: string) =
                     async { return Error BadRequest }
                 | HttpStatusCode.Unauthorized ->
                     async { return Error AuthorizationFailure }
-                | HttpStatusCode.Gone ->
+                | HttpStatusCode.Gone | HttpStatusCode.NotFound ->
                     async { return Error (QueueOrTopicDoesNotExists queueName) }
                 | HttpStatusCode.InternalServerError ->
                     async { return Error InternalAzureError }
-                | _ -> async { return Error UnknownError }
+                | code -> async {
+                        printfn "status code received: %A" code
+                        return Error UnknownError
+                    }
         }
 
     member this.Post msg =
