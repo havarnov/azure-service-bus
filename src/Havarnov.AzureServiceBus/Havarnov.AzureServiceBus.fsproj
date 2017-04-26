@@ -10,6 +10,7 @@
     <Compile Include="ConnectionString.fs" />
     <Compile Include="SharedAccessKey.fs" />
     <Compile Include="Library.fs" />
+    <Compile Include="CSharpWrapper.fs" />
   </ItemGroup>
 
   <ItemGroup>
